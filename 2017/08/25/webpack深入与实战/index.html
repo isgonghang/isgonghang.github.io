@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>webpack深入与实战 | Harris</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    
+      <link rel="icon" href="/favicon.png">
+    
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <link rel="stylesheet" href="/js/google-code-prettify/tomorrow-night-eighties.min.css">
+
+  </head>
+
+  <body>
+
+<header>
+	<a id="logo" href="/" title="Harris">
+	<img src="/favicon.png" alt="Harris"></a>
+	
+	
+		<!--搜索栏-->
+		<i class="js-toggle-search iconfont icon-search"></i>
+
+
+<form class="js-search search-form search-form--modal" method="get" action="http://gushi.li" role="search">
+	<div class="search-form__inner">
+		<div>
+			<i class="iconfont icon-search"></i>
+			<input class="text-input" placeholder="Enter Key..." type="search">
+		</div>
+	</div>
+</form>
+	
+
+	
+		<!--侧边导航栏-->
+		<a id="nav-toggle" href="#"><span></span></a>
+
+<nav>
+	<div class="menu-top-container">
+		<ul id="menu-top" class="menu">
+			
+				
+				<li class="current-menu-item">
+					<a href="http://weibo.com/yumemor/" target="_blank">Weibo</a>
+				</li>
+			
+		</ul>
+	</div>
+</nav>
+	
+
+</header>
+<div class="m-header ">
+	<section id="hero1" class="hero">
+		<div class="inner">
+		</div>
+	</section>
+	
+		<figure class="top-image" data-enable=true></figure>
+	
+</div>
+
+<!--文章列表-->
+<div class="wrapper">
+  
+    <!--文章-->
+<article>
+	
+  
+    <h1 class="post-title" itemprop="name">
+      webpack深入与实战
+    </h1>
+  
+
+	<div class='post-body mb'>
+		<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><pre><code>mrdir my-project                //创建文件
+cd my-project                   //进入文件
+npm init                        //初始化配置文件
+npm install webpack --save-dev  //安装webpack
+</code></pre><h2 id="基本打包命令"><a href="#基本打包命令" class="headerlink" title="基本打包命令"></a>基本打包命令</h2><pre><code>webpack hello.js hello.bundle.js
+其中hello.js为自己编写的文件，hello.bundle.js为打包后文件
+</code></pre><p>当打包css文件时，可以在文件内通过引入loader进行打包</p>
+<pre><code>require(&apos;style-loader!css-loader!./style.css&apos;)
+</code></pre><p>也可以在命令行中直接通过命令打包</p>
+<pre><code>webpack hello.js hello.bundle.js --module-bind &apos;css=style-loader!css-loader&apos;
+</code></pre><p>添加 –watch    命令可以动态观察文件变化并进行打包<br>     –progress  命令可以显示百分比读条<br>     –display-modules 可以列举出模块<br>     –display-reasons 可以列举出打包模块原因</p>
+<pre><code>webpack hello.js hello.bundle.js --module-bind &apos;css=style-loader!css-loader&apos; --progress --display-modules --display-reasons --watch
+</code></pre><h2 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h2><p>配置文件是默认的文件名（webpack.config.js）</p>
+<ol>
+<li>在文件的根目录下创建webpack.config.js文件</li>
+<li><p>配置参数</p>
+<p> var path = require(‘path’);<br> module.exports = {</p>
+<pre><code>entry:&apos;./src/script/main.js&apos;,//打包的入口
+output:{
+    path: path.resolve(__dirname, &apos;dist/js&apos;),//打包后的存放路径     （绝对路径）
+    filename:&apos;bundle.js&apos;//打包后的文件名
+}
+</code></pre><p> }</p>
+</li>
+</ol>
+<ol>
+<li>在命令行 中运行：webpack</li>
+</ol>
+<p><strong>配置文件不是默认的文件名</strong></p>
+<ol>
+<li>比如配置文件的文件名为webpack.dev.config.js</li>
+<li>在命令行中运行时：webpack –config webpack.dev.config.js</li>
+</ol>
+<p><strong>设置webpack参数</strong></p>
+<ol>
+<li>在npm脚本文件package.json文件中设置</li>
+<li>在scripts中添加：”webpack”:”webpack –config webpack.config.js –progress –display-modules –colors –display-reasons”</li>
+</ol>
+<h2 id="webpack的三种用法"><a href="#webpack的三种用法" class="headerlink" title="webpack的三种用法"></a>webpack的三种用法</h2><p>1.直接命令行使用。<br>2.node.js API的使用方式。<br>3.webpack —config webpack.config.js </p>
+<p><strong>entry</strong></p>
+<p>entry用于定义入口文件</p>
+<p>1.三种输入方式</p>
+<p>（1）string，输入字符串<br>    entry:{<br>        main:’./src/script/main.js’<br>    },</p>
+<p>（2）array, 数组。适用情况：两个平行的，不相依赖的文件打包在一起。<br>    entry:{<br>        main:[‘./src/script/main.js’,’./src/script/a.js’]<br>    },</p>
+<p>（3）object, 适用情况：多页面应用程序。这里要和output里的[name]占位符配合使用，威力才能最大。如果你要打包成多个js文件，那么entry对象里的key叫做chunk就是文件名，里面的值就是需要打包的文件里面包含的文件。<br>    entry:{<br>        main:’./src/script/main.js’,<br>        a:’./src/script/a.js’<br>    },</p>
+<p><strong>output</strong></p>
+<p>1.占位符有3种：[name]、[hash]、[chunkhash]</p>
+<p>2.output的filename<br>（1）hash: 这次打包的hash<br>每次终端运行webpack命令，都会生成一段信息，这段信息的第一行就有一个hash<br>（2）chunkhash:每一个chunk自己的hash</p>
+<p>3.output的path，//这里配置的是输出的文件地址</p>
+<h2 id="自动生成html页面"><a href="#自动生成html页面" class="headerlink" title="自动生成html页面"></a>自动生成html页面</h2><p>html中引入script，如果是hash或者chunkhash生成的js，则src每次都要修改，避免修改的方法就是用webpack的插件：</p>
+<p>1.安装webpack插件：<br>终端项目目录输入：npm install html-webpack-plugin –save-dev</p>
+<p>2.配置文件中建立对插件的引用<br>webpack.config.js中<br>（1）引用插件</p>
+<pre><code>var htmlWebpackPlugin=require(&apos;htmll-webpack-plugin&apos;);
+</code></pre><p>（2）以index.html为模板</p>
+<pre><code>设置plugins:[
+    new htmlWebpackPlugin()// 初始化插件
+]
+</code></pre><p>这里的代码只会让webpack自动生成一个index.html，里面自动把js代码插入到index.html当中。//注意，这里说的是webpack生成的index.html，不是你自定义的index.html。<br>要想让生成的index.html是自定义的，那么就要设置</p>
+<pre><code>plugins:[
+    new htmlWebpackPlugin({
+        template: ‘index.html’,//   这里的index.html就是根目录下的index.html文件，是你自己写的文件。
+        filename: ‘index-[hash].html’,//这里指定的是生成的文件的名字
+         inject: &apos;body’,// 这里可以指定js文件是放在head还是body标签里面具体还可  以放哪，请看文档说明。https://github.com/jantimon/   html-webpack-plugin#configuration
+    })// 初始化插件
+]
+</code></pre><p>（4）webpack使用插件的地址是根据配置里的context，上下文来决定的。</p>
+<p>（5）文件生成在dist下，而不是一直在js下<br>    output:{<br>        path:path.resolve(__dirname,’./dist’),<br>        filename:’js/[name]-[chunkhash].js’//js文件生成到js文件夹中<br>    },</p>
+
+	</div>
+	<div class="meta split">
+		
+			<span>本文总阅读量 <span id="busuanzi_value_page_pv"></span> 次</span>
+		
+		<time class="post-date" datetime="2017-08-25T03:12:36.000Z" itemprop="datePublished">2017-08-25</time>
+	</div>
+</article>
+
+<!--评论-->
+
+	
+<div class="ds-thread" data-thread-key="webpack深入与实战" data-title="webpack深入与实战" data-url="https://github.com/isgonghang/isgonghang.github.io/2017/08/25/webpack深入与实战/"></div>
+<script type="text/javascript">
+
+var duoshuoQuery = {short_name:"yumemor"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0]
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+</script>
+
+
+  
+</div>
+
+
+  <svg id="bigTriangleColor" width="100%" height="40" viewBox="0 0 100 102" preserveAspectRatio="none">
+    <path d="M0 0 L50 100 L100 0 Z"></path>
+  </svg>
+
+  
+
+
+  <div class="wrapper"></div>
+
+
+
+
+
+<div class="fat-footer">
+	<div class="wrapper">
+		<div class="layout layout--center">
+			<div class="layout__item palm-mb">
+				<div class="media">
+					<img class="headimg" src='http://oct8d1mqf.bkt.clouddn.com/2016-10-17-15%3A42%3A28.jpg' alt='Harris'>
+					<div class="media__body">
+						<h4>Harris</h4>
+						<p class='site-description'></p>
+					</div>
+				</div>
+				<div class="author-contact">
+					<ul>
+						
+							
+							<li>
+				        		<a href="http://weibo.com/yumemor/" target="_blank">
+				        			
+				        				<i class="iconfont icon-weibo"></i>
+				        			
+				        		</a>
+				        	</li>
+						
+							
+							<li>
+				        		<a href="https://github.com/yumemor" target="_blank">
+				        			
+				        				<i class="iconfont icon-github"></i>
+				        			
+				        		</a>
+				        	</li>
+						
+							
+							<li>
+				        		<a href="https://www.zhihu.com/people/yumemor" target="_blank">
+				        			
+										<i class="iconfont icon-zhihu"></i>
+				        			
+				        		</a>
+				        	</li>
+						
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<footer class="footer" role="contentinfo">
+	<div class="wrapper wrapper--wide split split--responsive">
+		
+			<span>本站总访问量 <span id="busuanzi_value_site_pv"></span> 次, 访客数 <span id="busuanzi_value_site_uv"></span> 人次</span>
+		
+		<span>Theme by <a href="http://github.com/yumemor">Yumemor</a>. Powered by <a href="http://hexo.io">Hexo</a></span>
+	</div>
+</footer>
+
+	<!-－这里导入了 lib.js 里面涵盖了 jQuery 等框架 所以注释掉-->
+	<!--<script src="http://lib.sinaapp.com/js/jquery/2.0/jquery.min.js"></script>-->
+	<script src="/js/lib.js"></script>
+	<script src="/js/google-code-prettify/prettify.js"></script>
+	<script src="/js/module.js"></script>
+	<script src="/js/script.js"></script>
+	
+		<script async src="http://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+	
+	<script type='text/javascript'>
+		//代码高亮
+		$(document).ready(function(){
+	 		$('pre').addClass('prettyprint linenums').attr('style', 'overflow:auto;');
+   			prettyPrint();
+		});
+	</script>
+	</body>
+</html>

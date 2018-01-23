@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>JavaScript正则表达式 | Harris</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    
+      <link rel="icon" href="/favicon.png">
+    
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <link rel="stylesheet" href="/js/google-code-prettify/tomorrow-night-eighties.min.css">
+
+  </head>
+
+  <body>
+
+<header>
+	<a id="logo" href="/" title="Harris">
+	<img src="/favicon.png" alt="Harris"></a>
+	
+	
+		<!--搜索栏-->
+		<i class="js-toggle-search iconfont icon-search"></i>
+
+
+<form class="js-search search-form search-form--modal" method="get" action="http://gushi.li" role="search">
+	<div class="search-form__inner">
+		<div>
+			<i class="iconfont icon-search"></i>
+			<input class="text-input" placeholder="Enter Key..." type="search">
+		</div>
+	</div>
+</form>
+	
+
+	
+		<!--侧边导航栏-->
+		<a id="nav-toggle" href="#"><span></span></a>
+
+<nav>
+	<div class="menu-top-container">
+		<ul id="menu-top" class="menu">
+			
+				
+				<li class="current-menu-item">
+					<a href="http://weibo.com/yumemor/" target="_blank">Weibo</a>
+				</li>
+			
+		</ul>
+	</div>
+</nav>
+	
+
+</header>
+<div class="m-header ">
+	<section id="hero1" class="hero">
+		<div class="inner">
+		</div>
+	</section>
+	
+		<figure class="top-image" data-enable=true></figure>
+	
+</div>
+
+<!--文章列表-->
+<div class="wrapper">
+  
+    <!--文章-->
+<article>
+	
+  
+    <h1 class="post-title" itemprop="name">
+      JavaScript正则表达式
+    </h1>
+  
+
+	<div class='post-body mb'>
+		<p>正则表达式是用于匹配字符串中字符组合的模式。在JavaScript中，正则表达式也是对象。这些模式被用于RegExp的exec和test方法,以及String的match、replace、search和split方法。</p>
+<h2 id="创建正则表达式"><a href="#创建正则表达式" class="headerlink" title="创建正则表达式"></a>创建正则表达式</h2><p>有两种方法可以构建一个正则表达式：</p>
+<p>1.使用一个正则表达式字面量，其由包含在斜杠之间的模式组成：</p>
+<pre><code>var reg = /pattern/flags
+</code></pre><p>2.调用RegExp对象的构造函数:</p>
+<pre><code>var reg = new RegExp(pattern, [,flags])
+</code></pre><h2 id="元字符"><a href="#元字符" class="headerlink" title="元字符"></a>元字符</h2><p>元字符是在正则表达式中有特殊意义的非字母字符，包括：</p>
+<pre><code>* + ? ^ $ . | \ ( ) { } []
+</code></pre><h2 id="字符类"><a href="#字符类" class="headerlink" title="字符类"></a>字符类</h2><p>类是指符合某些特性的对象，一个泛指，而不是特指某个字符</p>
+<pre><code>可以使用元字符[]来构建一个简单的类
+例如：[abc]
+</code></pre><p>可以使用元字符^创建反向类(不属于某类的内容)</p>
+<pre><code>例如 [^abc] 表示不是a或b或c的内容
+</code></pre><h2 id="范围类"><a href="#范围类" class="headerlink" title="范围类"></a>范围类</h2><pre><code>可以使用[a-z]来连接两个字符表示从a到z的任意字符
+可以连写 [a-zA-Z]
+</code></pre><h2 id="预定义类"><a href="#预定义类" class="headerlink" title="预定义类"></a>预定义类</h2><p>包括 . \d \D \s \S \w \W等，具体含义查阅MDN<a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Guide/Regular_Expressions" target="_blank" rel="noopener">MDN正则表达式</a></p>
+<p><strong>边界字符：^(以xxx开始)、$(以xxx结束)、\b(单词边界)、\B(非单词边界)</strong></p>
+<h2 id="量词"><a href="#量词" class="headerlink" title="量词"></a>量词</h2><pre><code>量词包括 ?(出现0次或1次，最多出现一次) 
+         +(出现1次或多次，至少出现一次) 
+         *(出现0次或多次，任意次) 
+         {n}(出现n次)
+         {n,m}(出现n到m次)
+         {n,}(至少出现n次)
+</code></pre><h2 id="贪婪模式和非贪婪模式"><a href="#贪婪模式和非贪婪模式" class="headerlink" title="贪婪模式和非贪婪模式"></a>贪婪模式和非贪婪模式</h2><p>当指定一个\d{3,6}时，正则表达式默认为贪婪模式，会尽可能多的匹配(6次)</p>
+<p>在量词后面加上?可以切换到非贪婪模式，正则表达式会尽可能少的匹配</p>
+<h2 id="分组"><a href="#分组" class="headerlink" title="分组"></a>分组</h2><p>使用()可以达到分组的功能，使量词作用于分组</p>
+<pre><code>例如：a1b2c3d4.replace(/[a-z]\d{3}/g, &apos;x&apos;)只会匹配到数字
+而使用a1b2c3d4.replace(/([a-z]\d){3}/g, &apos;x&apos;)则会替换为xd4
+</code></pre><h2 id="前瞻"><a href="#前瞻" class="headerlink" title="前瞻"></a>前瞻</h2><p>正则表达式从文本头部向尾部开始解析，文本尾部方向，成为’前’</p>
+<p>前瞻就是在正则表达式匹配到规则的时候，向前检查是否符合断言</p>
+<p>后顾方向相反，但JavaScript不支持后顾</p>
+<pre><code>正向前瞻 exp(?=assert)
+负向前瞻 exp(?!assert)
+例如: &apos;a2*3&apos; .replace(/\w(?=\d)/g, &apos;x&apos;)
+</code></pre><h2 id="对象属性"><a href="#对象属性" class="headerlink" title="对象属性"></a>对象属性</h2><pre><code>g  全文搜索
+i  忽略大小写
+m  多行搜索
+lastIndex  当前表达式匹配内容的最后一个字符的下一个位置
+</code></pre><h2 id="对象方法"><a href="#对象方法" class="headerlink" title="对象方法"></a>对象方法</h2><p><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/RegExp/test" target="_blank" rel="noopener">test()</a><br><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/RegExp/exec" target="_blank" rel="noopener">exec()</a></p>
+<p>字符串对象方法:<br><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/String/match" target="_blank" rel="noopener">match()</a><br><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/String/replace" target="_blank" rel="noopener">replace()</a><br><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/String/search" target="_blank" rel="noopener">search()</a></p>
+
+	</div>
+	<div class="meta split">
+		
+			<span>本文总阅读量 <span id="busuanzi_value_page_pv"></span> 次</span>
+		
+		<time class="post-date" datetime="2017-08-18T13:49:18.000Z" itemprop="datePublished">2017-08-18</time>
+	</div>
+</article>
+
+<!--评论-->
+
+	
+<div class="ds-thread" data-thread-key="JavaScript正则表达式" data-title="JavaScript正则表达式" data-url="https://github.com/isgonghang/isgonghang.github.io/2017/08/18/JavaScript正则表达式/"></div>
+<script type="text/javascript">
+
+var duoshuoQuery = {short_name:"yumemor"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0]
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+</script>
+
+
+  
+</div>
+
+
+  <svg id="bigTriangleColor" width="100%" height="40" viewBox="0 0 100 102" preserveAspectRatio="none">
+    <path d="M0 0 L50 100 L100 0 Z"></path>
+  </svg>
+
+  
+
+
+  <div class="wrapper"></div>
+
+
+
+
+
+<div class="fat-footer">
+	<div class="wrapper">
+		<div class="layout layout--center">
+			<div class="layout__item palm-mb">
+				<div class="media">
+					<img class="headimg" src='http://oct8d1mqf.bkt.clouddn.com/2016-10-17-15%3A42%3A28.jpg' alt='Harris'>
+					<div class="media__body">
+						<h4>Harris</h4>
+						<p class='site-description'></p>
+					</div>
+				</div>
+				<div class="author-contact">
+					<ul>
+						
+							
+							<li>
+				        		<a href="http://weibo.com/yumemor/" target="_blank">
+				        			
+				        				<i class="iconfont icon-weibo"></i>
+				        			
+				        		</a>
+				        	</li>
+						
+							
+							<li>
+				        		<a href="https://github.com/yumemor" target="_blank">
+				        			
+				        				<i class="iconfont icon-github"></i>
+				        			
+				        		</a>
+				        	</li>
+						
+							
+							<li>
+				        		<a href="https://www.zhihu.com/people/yumemor" target="_blank">
+				        			
+										<i class="iconfont icon-zhihu"></i>
+				        			
+				        		</a>
+				        	</li>
+						
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<footer class="footer" role="contentinfo">
+	<div class="wrapper wrapper--wide split split--responsive">
+		
+			<span>本站总访问量 <span id="busuanzi_value_site_pv"></span> 次, 访客数 <span id="busuanzi_value_site_uv"></span> 人次</span>
+		
+		<span>Theme by <a href="http://github.com/yumemor">Yumemor</a>. Powered by <a href="http://hexo.io">Hexo</a></span>
+	</div>
+</footer>
+
+	<!-－这里导入了 lib.js 里面涵盖了 jQuery 等框架 所以注释掉-->
+	<!--<script src="http://lib.sinaapp.com/js/jquery/2.0/jquery.min.js"></script>-->
+	<script src="/js/lib.js"></script>
+	<script src="/js/google-code-prettify/prettify.js"></script>
+	<script src="/js/module.js"></script>
+	<script src="/js/script.js"></script>
+	
+		<script async src="http://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+	
+	<script type='text/javascript'>
+		//代码高亮
+		$(document).ready(function(){
+	 		$('pre').addClass('prettyprint linenums').attr('style', 'overflow:auto;');
+   			prettyPrint();
+		});
+	</script>
+	</body>
+</html>

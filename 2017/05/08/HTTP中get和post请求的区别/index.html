@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>HTTP中get和post请求的区别 | Harris</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    
+      <link rel="icon" href="/favicon.png">
+    
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <link rel="stylesheet" href="/js/google-code-prettify/tomorrow-night-eighties.min.css">
+
+  </head>
+
+  <body>
+
+<header>
+	<a id="logo" href="/" title="Harris">
+	<img src="/favicon.png" alt="Harris"></a>
+	
+	
+		<!--搜索栏-->
+		<i class="js-toggle-search iconfont icon-search"></i>
+
+
+<form class="js-search search-form search-form--modal" method="get" action="http://gushi.li" role="search">
+	<div class="search-form__inner">
+		<div>
+			<i class="iconfont icon-search"></i>
+			<input class="text-input" placeholder="Enter Key..." type="search">
+		</div>
+	</div>
+</form>
+	
+
+	
+		<!--侧边导航栏-->
+		<a id="nav-toggle" href="#"><span></span></a>
+
+<nav>
+	<div class="menu-top-container">
+		<ul id="menu-top" class="menu">
+			
+				
+				<li class="current-menu-item">
+					<a href="http://weibo.com/yumemor/" target="_blank">Weibo</a>
+				</li>
+			
+		</ul>
+	</div>
+</nav>
+	
+
+</header>
+<div class="m-header ">
+	<section id="hero1" class="hero">
+		<div class="inner">
+		</div>
+	</section>
+	
+		<figure class="top-image" data-enable=true></figure>
+	
+</div>
+
+<!--文章列表-->
+<div class="wrapper">
+  
+    <!--文章-->
+<article>
+	
+  
+    <h1 class="post-title" itemprop="name">
+      HTTP中get和post请求的区别
+    </h1>
+  
+
+	<div class='post-body mb'>
+		<h2 id="关于HTTP协议"><a href="#关于HTTP协议" class="headerlink" title="关于HTTP协议"></a>关于HTTP协议</h2><pre><code>HTTP（即超文本传输协议）是现代网络中最常见和常用的协议之一，设计它的目的是保证客户机和服务器之间的通信。
+
+HTTP 的工作方式是客户机与服务器之间的“请求-应答”协议。
+
+客户端可以是Web浏览器，服务器端可以是计算机上的某些网络应用程序。
+
+通常情况下，由浏览器向服务器发起 HTTP 请求，服务器向浏览器返回响应。响应包含了请求的状态信息以及可能被请求的内容。
+</code></pre><h2 id="两种常见的-HTTP请求GET和POST"><a href="#两种常见的-HTTP请求GET和POST" class="headerlink" title="两种常见的 HTTP请求GET和POST"></a>两种常见的 HTTP请求GET和POST</h2><pre><code>在客户机和服务器之间进行请求-响应时，两种最常被用到的请求方式：GET和POST。
+
+GET-从指定的资源请求数据。POST-向指定的资源提交要被处理的数据。
+</code></pre><h2 id="GET请求"><a href="#GET请求" class="headerlink" title="GET请求"></a>GET请求</h2><pre><code>GET 方法请求指定的资源. 使用 GET 的请求应该只用于获取数据。
+
+请注意，查询字符串（名称/值对）是在 GET 请求的 URL 中发送的：
+
+`/test/test.php?name1=value1&amp;name2=value2`
+**有关 GET 请求的一些特点：**
+
+1.GET 请求可以被缓存
+2.GET 请求保留在浏览器历史记录中
+3.GET 请求可被收藏为书签
+4.GET 请求不应在处理敏感数据时使用（即通常所说的数据不加密）
+5.GET 请求有长度
+6.GET 请求只应于从服务器取回
+</code></pre><p>##POST请求<br>    请注意，查询字符串（名称/值对）是在 POST 请求的 HTTP 消息主体中发送的：<br>    <code>POST /test/test.php HTTP/1.1
+    Host: baidu.com
+    name1=value1&amp;name2=value2</code></p>
+<pre><code>**有关 POST 请求的一些特点：**
+1.POST 请求不会被缓存
+2.POST 请求不会保留在浏览器历史记录中
+3.POST 请求不能被收藏为书签
+4.POST 请求对数据长度没有要求
+5.POST 请求可以用于处理敏感数据
+</code></pre><p>##比较GET和POST<br>    <img src="https://github.com/isgonghang/Page-making/blob/master/blogImg/HTTPget&amp;post.png?raw=true" alt="get&amp;post"></p>
+
+	</div>
+	<div class="meta split">
+		
+			<span>本文总阅读量 <span id="busuanzi_value_page_pv"></span> 次</span>
+		
+		<time class="post-date" datetime="2017-05-08T12:29:30.000Z" itemprop="datePublished">2017-05-08</time>
+	</div>
+</article>
+
+<!--评论-->
+
+	
+<div class="ds-thread" data-thread-key="HTTP中get和post请求的区别" data-title="HTTP中get和post请求的区别" data-url="https://github.com/isgonghang/isgonghang.github.io/2017/05/08/HTTP中get和post请求的区别/"></div>
+<script type="text/javascript">
+
+var duoshuoQuery = {short_name:"yumemor"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0]
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+</script>
+
+
+  
+</div>
+
+
+  <svg id="bigTriangleColor" width="100%" height="40" viewBox="0 0 100 102" preserveAspectRatio="none">
+    <path d="M0 0 L50 100 L100 0 Z"></path>
+  </svg>
+
+  
+
+
+  <div class="wrapper"></div>
+
+
+
+
+
+<div class="fat-footer">
+	<div class="wrapper">
+		<div class="layout layout--center">
+			<div class="layout__item palm-mb">
+				<div class="media">
+					<img class="headimg" src='http://oct8d1mqf.bkt.clouddn.com/2016-10-17-15%3A42%3A28.jpg' alt='Harris'>
+					<div class="media__body">
+						<h4>Harris</h4>
+						<p class='site-description'></p>
+					</div>
+				</div>
+				<div class="author-contact">
+					<ul>
+						
+							
+							<li>
+				        		<a href="http://weibo.com/yumemor/" target="_blank">
+				        			
+				        				<i class="iconfont icon-weibo"></i>
+				        			
+				        		</a>
+				        	</li>
+						
+							
+							<li>
+				        		<a href="https://github.com/yumemor" target="_blank">
+				        			
+				        				<i class="iconfont icon-github"></i>
+				        			
+				        		</a>
+				        	</li>
+						
+							
+							<li>
+				        		<a href="https://www.zhihu.com/people/yumemor" target="_blank">
+				        			
+										<i class="iconfont icon-zhihu"></i>
+				        			
+				        		</a>
+				        	</li>
+						
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<footer class="footer" role="contentinfo">
+	<div class="wrapper wrapper--wide split split--responsive">
+		
+			<span>本站总访问量 <span id="busuanzi_value_site_pv"></span> 次, 访客数 <span id="busuanzi_value_site_uv"></span> 人次</span>
+		
+		<span>Theme by <a href="http://github.com/yumemor">Yumemor</a>. Powered by <a href="http://hexo.io">Hexo</a></span>
+	</div>
+</footer>
+
+	<!-－这里导入了 lib.js 里面涵盖了 jQuery 等框架 所以注释掉-->
+	<!--<script src="http://lib.sinaapp.com/js/jquery/2.0/jquery.min.js"></script>-->
+	<script src="/js/lib.js"></script>
+	<script src="/js/google-code-prettify/prettify.js"></script>
+	<script src="/js/module.js"></script>
+	<script src="/js/script.js"></script>
+	
+		<script async src="http://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+	
+	<script type='text/javascript'>
+		//代码高亮
+		$(document).ready(function(){
+	 		$('pre').addClass('prettyprint linenums').attr('style', 'overflow:auto;');
+   			prettyPrint();
+		});
+	</script>
+	</body>
+</html>

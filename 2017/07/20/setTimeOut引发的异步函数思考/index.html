@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>setTimeOut引发的异步函数思考 | Harris</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    
+      <link rel="icon" href="/favicon.png">
+    
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <link rel="stylesheet" href="/js/google-code-prettify/tomorrow-night-eighties.min.css">
+
+  </head>
+
+  <body>
+
+<header>
+	<a id="logo" href="/" title="Harris">
+	<img src="/favicon.png" alt="Harris"></a>
+	
+	
+		<!--搜索栏-->
+		<i class="js-toggle-search iconfont icon-search"></i>
+
+
+<form class="js-search search-form search-form--modal" method="get" action="http://gushi.li" role="search">
+	<div class="search-form__inner">
+		<div>
+			<i class="iconfont icon-search"></i>
+			<input class="text-input" placeholder="Enter Key..." type="search">
+		</div>
+	</div>
+</form>
+	
+
+	
+		<!--侧边导航栏-->
+		<a id="nav-toggle" href="#"><span></span></a>
+
+<nav>
+	<div class="menu-top-container">
+		<ul id="menu-top" class="menu">
+			
+				
+				<li class="current-menu-item">
+					<a href="http://weibo.com/yumemor/" target="_blank">Weibo</a>
+				</li>
+			
+		</ul>
+	</div>
+</nav>
+	
+
+</header>
+<div class="m-header ">
+	<section id="hero1" class="hero">
+		<div class="inner">
+		</div>
+	</section>
+	
+		<figure class="top-image" data-enable=true></figure>
+	
+</div>
+
+<!--文章列表-->
+<div class="wrapper">
+  
+    <!--文章-->
+<article>
+	
+  
+    <h1 class="post-title" itemprop="name">
+      setTimeOut引发的异步函数思考
+    </h1>
+  
+
+	<div class='post-body mb'>
+		<p>今天在博客上看到了一篇setTimeOut异步函数的文章，正好自己也不是很清楚，看完后感觉启发很大。</p>
+<h2 id="JavaScript运行环境"><a href="#JavaScript运行环境" class="headerlink" title="JavaScript运行环境"></a>JavaScript运行环境</h2><p>JS是单线程的，意思就是 <strong>同一时刻只能做一件事情。</strong><br>但是要如何同时响应不同的操作呢？<br>先以BOSS来称呼JS的主线程，Boss为了更多更快地处理用户的需求，会不停地接收任务来执行。为了进一步提交效率，他 <strong>优先执行最紧急的任务（即刻要执行）</strong>，如果你要和他说”等下（3秒后 / 如果有我点了按钮 / 如果收到了服务器的响应）帮我在控制台打一个log吧。”，BOSS不会专门等着去执行你的需求，而是默默地把你这个”伪需求”记在一个”小本本”上，然后拍拍胸脯和你说：”我保证(I promise!)”，接着继续做手头上的事，等BOSS手头上事情做完了，会从小本本上选择 <strong>最早记录的没被执行</strong>的任务来执行。</p>
+<p>BOSS能力和时间有限，能做的只有这么多了。他Promise会帮你做的任务肯定会做（只要他没有猝死。。），但时间上可能并不一定严格符合你的要求，毕竟小本本上可能不仅只有一条任务。</p>
+<h2 id="理解setTimeOut"><a href="#理解setTimeOut" class="headerlink" title="理解setTimeOut"></a>理解setTimeOut</h2><p>上面的小故事中的称呼分别为：</p>
+<pre><code>JS主线程 =&gt; BOSS
+同步任务 =&gt; BOSS手头上正在做的任务
+异步任务（队列） =&gt; BOSS的小本本上的任务
+</code></pre><p>我以前只知道setTimeout的意思让JS从现在开始，经过指定的时间后，执行相应的函数。</p>
+<p>从方法名和大部分现象来看，很容易产生以上的误解。在我们理解了JS主线程的特点后，知道了它会优先完成同步任务，在同步任务执行过程中，不会执行其它任务。</p>
+<p>实际上，setTimeout做的事情是：<strong>在指定delay时间后，将指定方法作为异步任务添加到异步任务队列中。</strong></p>
+<p>所以，如果setTimeout的定时到了执行时间，JS主线程仍然还在执行同步任务，setTimeout所指定的方法并不会立刻执行。</p>
+<p>而且即使JS主线程执行完了同步任务，也不一定会执行setTimeout指定的方法，因为异步任务队列中可能有更早加入的异步任务。</p>
+<p>除了setTimeout还有一个setInterval,setInterval可以通过设置的时间向主线程添加异步任务，但最重要的是：<strong>setInterval会检测待执行队列中的异步任务，防止重复添加，但是并不会检测正在执行的异步任务。</strong></p>
+<p>防止重复定时：</p>
+<pre><code>setTimeout(function() {
+    doWhatYouWantTo();
+    setTimeout(arguments.callee, 100)
+}, 100);
+</code></pre>
+	</div>
+	<div class="meta split">
+		
+			<span>本文总阅读量 <span id="busuanzi_value_page_pv"></span> 次</span>
+		
+		<time class="post-date" datetime="2017-07-20T06:29:40.000Z" itemprop="datePublished">2017-07-20</time>
+	</div>
+</article>
+
+<!--评论-->
+
+	
+<div class="ds-thread" data-thread-key="setTimeOut引发的异步函数思考" data-title="setTimeOut引发的异步函数思考" data-url="https://github.com/isgonghang/isgonghang.github.io/2017/07/20/setTimeOut引发的异步函数思考/"></div>
+<script type="text/javascript">
+
+var duoshuoQuery = {short_name:"yumemor"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0]
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+</script>
+
+
+  
+</div>
+
+
+  <svg id="bigTriangleColor" width="100%" height="40" viewBox="0 0 100 102" preserveAspectRatio="none">
+    <path d="M0 0 L50 100 L100 0 Z"></path>
+  </svg>
+
+  
+
+
+  <div class="wrapper"></div>
+
+
+
+
+
+<div class="fat-footer">
+	<div class="wrapper">
+		<div class="layout layout--center">
+			<div class="layout__item palm-mb">
+				<div class="media">
+					<img class="headimg" src='http://oct8d1mqf.bkt.clouddn.com/2016-10-17-15%3A42%3A28.jpg' alt='Harris'>
+					<div class="media__body">
+						<h4>Harris</h4>
+						<p class='site-description'></p>
+					</div>
+				</div>
+				<div class="author-contact">
+					<ul>
+						
+							
+							<li>
+				        		<a href="http://weibo.com/yumemor/" target="_blank">
+				        			
+				        				<i class="iconfont icon-weibo"></i>
+				        			
+				        		</a>
+				        	</li>
+						
+							
+							<li>
+				        		<a href="https://github.com/yumemor" target="_blank">
+				        			
+				        				<i class="iconfont icon-github"></i>
+				        			
+				        		</a>
+				        	</li>
+						
+							
+							<li>
+				        		<a href="https://www.zhihu.com/people/yumemor" target="_blank">
+				        			
+										<i class="iconfont icon-zhihu"></i>
+				        			
+				        		</a>
+				        	</li>
+						
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<footer class="footer" role="contentinfo">
+	<div class="wrapper wrapper--wide split split--responsive">
+		
+			<span>本站总访问量 <span id="busuanzi_value_site_pv"></span> 次, 访客数 <span id="busuanzi_value_site_uv"></span> 人次</span>
+		
+		<span>Theme by <a href="http://github.com/yumemor">Yumemor</a>. Powered by <a href="http://hexo.io">Hexo</a></span>
+	</div>
+</footer>
+
+	<!-－这里导入了 lib.js 里面涵盖了 jQuery 等框架 所以注释掉-->
+	<!--<script src="http://lib.sinaapp.com/js/jquery/2.0/jquery.min.js"></script>-->
+	<script src="/js/lib.js"></script>
+	<script src="/js/google-code-prettify/prettify.js"></script>
+	<script src="/js/module.js"></script>
+	<script src="/js/script.js"></script>
+	
+		<script async src="http://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+	
+	<script type='text/javascript'>
+		//代码高亮
+		$(document).ready(function(){
+	 		$('pre').addClass('prettyprint linenums').attr('style', 'overflow:auto;');
+   			prettyPrint();
+		});
+	</script>
+	</body>
+</html>

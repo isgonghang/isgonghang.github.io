@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>css居中布局总结 | Harris</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    
+      <link rel="icon" href="/favicon.png">
+    
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <link rel="stylesheet" href="/js/google-code-prettify/tomorrow-night-eighties.min.css">
+
+  </head>
+
+  <body>
+
+<header>
+	<a id="logo" href="/" title="Harris">
+	<img src="/favicon.png" alt="Harris"></a>
+	
+	
+		<!--搜索栏-->
+		<i class="js-toggle-search iconfont icon-search"></i>
+
+
+<form class="js-search search-form search-form--modal" method="get" action="http://gushi.li" role="search">
+	<div class="search-form__inner">
+		<div>
+			<i class="iconfont icon-search"></i>
+			<input class="text-input" placeholder="Enter Key..." type="search">
+		</div>
+	</div>
+</form>
+	
+
+	
+		<!--侧边导航栏-->
+		<a id="nav-toggle" href="#"><span></span></a>
+
+<nav>
+	<div class="menu-top-container">
+		<ul id="menu-top" class="menu">
+			
+				
+				<li class="current-menu-item">
+					<a href="http://weibo.com/yumemor/" target="_blank">Weibo</a>
+				</li>
+			
+		</ul>
+	</div>
+</nav>
+	
+
+</header>
+<div class="m-header ">
+	<section id="hero1" class="hero">
+		<div class="inner">
+		</div>
+	</section>
+	
+		<figure class="top-image" data-enable=true></figure>
+	
+</div>
+
+<!--文章列表-->
+<div class="wrapper">
+  
+    <!--文章-->
+<article>
+	
+  
+    <h1 class="post-title" itemprop="name">
+      css居中布局总结
+    </h1>
+  
+
+	<div class='post-body mb'>
+		<pre><code>&lt;div class=&quot;parent&quot;&gt;
+    &lt;div class=&quot;child&quot;&gt;&lt;/div&gt;
+&lt;/div&gt;
+</code></pre><h2 id="水平居中"><a href="#水平居中" class="headerlink" title="水平居中"></a>水平居中</h2><p>1.inlink-block+text-align</p>
+<pre><code>.child {display:inlink-block;}
+.parent {text-align:center;}
+</code></pre><p>优点：兼容性好<br>缺点：子元素宽高不可设置</p>
+<p>2.table+margin</p>
+<pre><code>.child {display:table; margin:0 auto;}
+</code></pre><p>优点：只需要设置child（自己）</p>
+<p>3.absolute+transform</p>
+<pre><code>.parent {position:relative;}
+.child {position:absolute;left:50%;transform:translateX(-50%);}
+</code></pre><p>优点：子元素不会对其他元素产生影响<br>缺点：兼容性问题</p>
+<p>4.flex+justify-content</p>
+<pre><code>.parent {display:flex;justify-content:center;}
+</code></pre><p>优点：只需设置parent节点<br>或者设置为</p>
+<pre><code>.parent {display:flex;}
+.child {margin:0 auto;}
+</code></pre><p>缺点：flex低版本ie不支持</p>
+<h2 id="垂直居中"><a href="#垂直居中" class="headerlink" title="垂直居中"></a>垂直居中</h2><p>1.table-cell+vertical-align</p>
+<pre><code>.parent {display:table-cell;vertical-align:middle;}
+</code></pre><p>优点：只需设置父节点，兼容性好</p>
+<p>2.absolute+transform</p>
+<pre><code>.parent {position:relative;}
+.child {position:absolute;top:50%;transform:translateY(-50%);}
+</code></pre><p>优点：子元素不会对其他元素产生影响<br>缺点：兼容性问题</p>
+<p>3.flex+align-items</p>
+<pre><code>.parent {display:flex;align-items:center;}
+</code></pre><p>优点：只需设置父节点<br>缺点：兼容性问题</p>
+<h2 id="水平和垂直均居中"><a href="#水平和垂直均居中" class="headerlink" title="水平和垂直均居中"></a>水平和垂直均居中</h2><p>1.inline-block+text-align+table-cell+vertical-align</p>
+<pre><code>.parent {text-align:center;display:table-cell;vertical-align:middle;}
+.child {display:inline-block;}
+</code></pre><p>2.absolute+transform</p>
+<pre><code>.parent {position:relative;}
+.child { position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);}
+</code></pre><p>3.flex+justify-content+align-items</p>
+<pre><code>.parent {display:flex;justify-content:center;align-items:center;}
+</code></pre>
+	</div>
+	<div class="meta split">
+		
+			<span>本文总阅读量 <span id="busuanzi_value_page_pv"></span> 次</span>
+		
+		<time class="post-date" datetime="2017-09-17T03:10:33.000Z" itemprop="datePublished">2017-09-17</time>
+	</div>
+</article>
+
+<!--评论-->
+
+	
+<div class="ds-thread" data-thread-key="css居中布局总结" data-title="css居中布局总结" data-url="https://github.com/isgonghang/isgonghang.github.io/2017/09/17/css居中布局总结/"></div>
+<script type="text/javascript">
+
+var duoshuoQuery = {short_name:"yumemor"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0]
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+</script>
+
+
+  
+</div>
+
+
+  <svg id="bigTriangleColor" width="100%" height="40" viewBox="0 0 100 102" preserveAspectRatio="none">
+    <path d="M0 0 L50 100 L100 0 Z"></path>
+  </svg>
+
+  
+
+
+  <div class="wrapper"></div>
+
+
+
+
+
+<div class="fat-footer">
+	<div class="wrapper">
+		<div class="layout layout--center">
+			<div class="layout__item palm-mb">
+				<div class="media">
+					<img class="headimg" src='http://oct8d1mqf.bkt.clouddn.com/2016-10-17-15%3A42%3A28.jpg' alt='Harris'>
+					<div class="media__body">
+						<h4>Harris</h4>
+						<p class='site-description'></p>
+					</div>
+				</div>
+				<div class="author-contact">
+					<ul>
+						
+							
+							<li>
+				        		<a href="http://weibo.com/yumemor/" target="_blank">
+				        			
+				        				<i class="iconfont icon-weibo"></i>
+				        			
+				        		</a>
+				        	</li>
+						
+							
+							<li>
+				        		<a href="https://github.com/yumemor" target="_blank">
+				        			
+				        				<i class="iconfont icon-github"></i>
+				        			
+				        		</a>
+				        	</li>
+						
+							
+							<li>
+				        		<a href="https://www.zhihu.com/people/yumemor" target="_blank">
+				        			
+										<i class="iconfont icon-zhihu"></i>
+				        			
+				        		</a>
+				        	</li>
+						
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<footer class="footer" role="contentinfo">
+	<div class="wrapper wrapper--wide split split--responsive">
+		
+			<span>本站总访问量 <span id="busuanzi_value_site_pv"></span> 次, 访客数 <span id="busuanzi_value_site_uv"></span> 人次</span>
+		
+		<span>Theme by <a href="http://github.com/yumemor">Yumemor</a>. Powered by <a href="http://hexo.io">Hexo</a></span>
+	</div>
+</footer>
+
+	<!-－这里导入了 lib.js 里面涵盖了 jQuery 等框架 所以注释掉-->
+	<!--<script src="http://lib.sinaapp.com/js/jquery/2.0/jquery.min.js"></script>-->
+	<script src="/js/lib.js"></script>
+	<script src="/js/google-code-prettify/prettify.js"></script>
+	<script src="/js/module.js"></script>
+	<script src="/js/script.js"></script>
+	
+		<script async src="http://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+	
+	<script type='text/javascript'>
+		//代码高亮
+		$(document).ready(function(){
+	 		$('pre').addClass('prettyprint linenums').attr('style', 'overflow:auto;');
+   			prettyPrint();
+		});
+	</script>
+	</body>
+</html>
