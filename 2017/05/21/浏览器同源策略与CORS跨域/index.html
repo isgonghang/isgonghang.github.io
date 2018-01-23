@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>浏览器同源策略与CORS跨域 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="浏览器的同源策略同源策略限制从一个源加载的文档或脚本如何与来自另一个源的资源进行交互。这是一个用于隔离潜在恶意文件的关键的安全机制。 一个源的定义 如果协议，端口（如果指定了一个）和域名对于两个页面是相同的，则两个页面具有相同的源。 例如www.google.com:80/index/package.json中，只要主域名(www)，子域名(google.com),端口(80)中有一个不相同，都属">
+<meta property="og:type" content="article">
+<meta property="og:title" content="浏览器同源策略与CORS跨域">
+<meta property="og:url" content="https://github.com/isgonghang/isgonghang.github.io/2017/05/21/浏览器同源策略与CORS跨域/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="浏览器的同源策略同源策略限制从一个源加载的文档或脚本如何与来自另一个源的资源进行交互。这是一个用于隔离潜在恶意文件的关键的安全机制。 一个源的定义 如果协议，端口（如果指定了一个）和域名对于两个页面是相同的，则两个页面具有相同的源。 例如www.google.com:80/index/package.json中，只要主域名(www)，子域名(google.com),端口(80)中有一个不相同，都属">
+<meta property="og:updated_time" content="2017-05-21T07:46:25.649Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="浏览器同源策略与CORS跨域">
+<meta name="twitter:description" content="浏览器的同源策略同源策略限制从一个源加载的文档或脚本如何与来自另一个源的资源进行交互。这是一个用于隔离潜在恶意文件的关键的安全机制。 一个源的定义 如果协议，端口（如果指定了一个）和域名对于两个页面是相同的，则两个页面具有相同的源。 例如www.google.com:80/index/package.json中，只要主域名(www)，子域名(google.com),端口(80)中有一个不相同，都属">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://github.com/isgonghang/isgonghang.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-浏览器同源策略与CORS跨域" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/05/21/浏览器同源策略与CORS跨域/" class="article-date">
+  <time datetime="2017-05-21T06:26:44.000Z" itemprop="datePublished">2017-05-21</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      浏览器同源策略与CORS跨域
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="浏览器的同源策略"><a href="#浏览器的同源策略" class="headerlink" title="浏览器的同源策略"></a>浏览器的同源策略</h2><pre><code>同源策略限制从一个源加载的文档或脚本如何与来自另一个源的资源进行交互。这是一个用于隔离潜在恶意文件的关键的安全机制。
+</code></pre><p><strong>一个源的定义</strong></p>
+<pre><code>如果协议，端口（如果指定了一个）和域名对于两个页面是相同的，则两个页面具有相同的源。
+例如www.google.com:80/index/package.json中，只要主域名(www)，子域名(google.com),端口(80)中有一个不相同，都属于非同源。
+</code></pre><table>
+<thead>
+<tr>
+<th>URL</th>
+<th style="text-align:center">结果</th>
+<th style="text-align:right">原因</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="http://store.company.com/dir2/other.html" target="_blank" rel="noopener">http://store.company.com/dir2/other.html</a></td>
+<td style="text-align:center">成功</td>
+<td style="text-align:right">dir2/other.html</td>
+</tr>
+<tr>
+<td><a href="http://store.company.com/dir/inner/another.html" target="_blank" rel="noopener">http://store.company.com/dir/inner/another.html</a></td>
+<td style="text-align:center">成功</td>
+<td style="text-align:right">dir/inner/another.html</td>
+</tr>
+<tr>
+<td><a href="https://store.company.com/secure.html" target="_blank" rel="noopener">https://store.company.com/secure.html</a></td>
+<td style="text-align:center">失败</td>
+<td style="text-align:right">不同的协议/https</td>
+</tr>
+<tr>
+<td><a href="http://store.company.com:81/dir/etc.html" target="_blank" rel="noopener">http://store.company.com:81/dir/etc.html</a></td>
+<td style="text-align:center">失败</td>
+<td style="text-align:right">不同的端口/81</td>
+</tr>
+<tr>
+<td><a href="http://news.company.com/dir/other.html" target="_blank" rel="noopener">http://news.company.com/dir/other.html</a></td>
+<td style="text-align:center">失败</td>
+<td style="text-align:right">不同的域名/news</td>
+</tr>
+</tbody>
+</table>
+<p><strong>IE例外</strong></p>
+<ul>
+<li>授信范围（Trust Zones）：两个相互之间高度互信的域名，如公司域名（corporate domains），不遵守同源策略的限制。</li>
+<li><p>端口：IE未将端口号加入到同源策略的组成部分之中，因此 <a href="http://company.com:81/index.html" target="_blank" rel="noopener">http://company.com:81/index.html</a> 和<a href="http://company.com/index.html" target="_blank" rel="noopener">http://company.com/index.html</a>  属于同源并且不受任何限制。<br><strong>源的更改</strong></p>
+<p>  页面可能会更改其自己的来源，但有一些限制。脚本可以将 document.domain 的值设置为其当前域或其当前域的超级域。如果将其设置为其当前域的超级域，则较短的域将用于后续原始检查。例如，假设文档中的一个脚本在 <a href="http://store.company.com/dir/other.html" target="_blank" rel="noopener">http://store.company.com/dir/other.html</a> 执行以下语句：</p>
+</li>
+</ul>
+<p><code>document.domain = &quot;company.com&quot;</code></p>
+<pre><code>这条语句执行之后，页面将会成功地通过对 http://company.com/dir/page.html 的同源检测。而同理，company.com 不能设置 document.domain 为 othercompany.com.
+
+浏览器单独保存端口号。任何的赋值操作，包括document.domain = document.domain都会以null值覆盖掉原来的端口号。因此company.com:8080页面的脚本不能仅通过设置document.domain = &quot;company.com&quot;就能与company.com通信。赋值时必须带上端口号，以确保端口号不会为null。
+</code></pre><p><strong>跨源网络访问</strong></p>
+<pre><code>同源策略控制了不同源之间的交互，例如在使用XMLHttpRequest 或 &lt;img&gt; 标签时则会受到同源策略的约束。交互通常分为三类：
+</code></pre><ul>
+<li>通常允许进行跨域写操作（Cross-origin writes）。例如链接（links），重定向以及表单提交。特定少数的HTTP请求需要添加 preflight。</li>
+<li>通常允许跨域资源嵌入（Cross-origin embedding）。之后下面会举例说明。</li>
+<li><strong>通常不允许跨域读操作（Cross-origin reads）。</strong>但常可以通过内嵌资源来巧妙的进行读取访问。例如可以读取嵌入图片的高度和宽度，调用内嵌脚本的方法，或availability of an embedded resource.</li>
+</ul>
+<p><strong>如何允许跨源访问</strong></p>
+<pre><code>此段文章转自阮一峰http://www.ruanyifeng.com/blog/2016/04/cors.html
+
+跨域资源共享(CORS)机制允许 Web应用服务器进行跨域访问控制，从而使跨域数据传输得以安全进行。浏览器支持在 API 容器中（例如 XMLHttpRequest或Fetch）使用 CORS，以降低跨域 HTTP 请求所带来的风险。
+
+浏览器将CORS请求分成两类：简单请求（simplerequest）和非简单请求（not-so-simple request）。
+只要同时满足以下两大条件，就属于简单请求。
+
+（1）请求方法是以下三种方法之一：
+
+    1.HEAD
+    2.GET
+    3.POST
+
+（2）HTTP的头信息不超出以下几种字段：
+
+    1.Accept
+    2.Accept-Language
+    3.Content-Language
+    4.Last-Event-ID
+    5.Content-Type：只限于三个值application/x-www-form-urlencoded、multipart/form-data、text/plain
+
+    凡是不同时满足上面两个条件，就属于非简单请求。
+</code></pre><p><strong>简单请求</strong></p>
+<pre><code>对于简单请求，浏览器直接发出CORS请求。具体来说，就是在头信息之中，增加一个Origin字段。
+
+GET /cors HTTP/1.1
+Origin: http://www.google.com
+Host: api.alice.com
+Accept-Language: en-US
+Connection: keep-alive
+User-Agent: Mozilla/5.0...
+
+上面的头信息中，Origin字段用来说明，本次请求来自哪个源（协议 + 域名 + 端口）。服务器根据这个值，决定是否同意这次请求。
+
+如果Origin指定的源，不在许可范围内，服务器会返回一个正常的HTTP回应。浏览器发现，这个回应的头信息没有包含Access-Control-Allow-Origin字段（详见下文），就知道出错了，从而抛出一个错误，被XMLHttpRequest的onerror回调函数捕获。注意，这种错误无法通过状态码识别，因为HTTP回应的状态码有可能是200。
+
+如果Origin指定的域名在许可范围内，服务器返回的响应，会多出几个头信息字段。
+
+Access-Control-Allow-Origin: http://www.google.com
+Access-Control-Allow-Credentials: true
+Access-Control-Expose-Headers: FooBar
+Content-Type: text/html; charset=utf-8
+
+上面的头信息之中，有三个与CORS请求相关的字段，都以Access-Control-开头。    
+
+（1）Access-Control-Allow-Origin
+该字段是必须的。它的值要么是请求时Origin字段的值，要么是一个*，表示接受任意域名的请求。
+
+（2）Access-Control-Allow-Credentials
+该字段可选。它的值是一个布尔值，表示是否允许发送Cookie。默认情况下，Cookie不包括在CORS请求之中。设为true，即表示服务器明确许可，Cookie可以包含在请求中，一起发给服务器。这个值也只能设为true，如果服务器不要浏览器发送Cookie，删除该字段即可。
+
+（3）Access-Control-Expose-Headers
+该字段可选。CORS请求时，XMLHttpRequest对象的getResponseHeader()方法只能拿到6个基本字段：Cache-Control、Content-Language、Content-Type、Expires、Last-Modified、Pragma。如果想拿到其他字段，就必须在Access-Control-Expose-Headers里面指定。上面的例子指定，getResponseHeader(&apos;FooBar&apos;)可以返回FooBar字段的值。
+
+CORS请求默认不发送Cookie和HTTP认证信息。如果要把Cookie发到服务器，一方面要服务器同意，指定Access-Control-Allow-Credentials字段。
+</code></pre><p><code>Access-Control-Allow-Credentials: true</code></p>
+<pre><code>另一方面，开发者必须在AJAX请求中打开withCredentials属性。
+</code></pre><p><code>var xhr = new XMLHttpRequest();xhr.withCredentials = true;</code></p>
+<pre><code>否则，即使服务器同意发送Cookie，浏览器也不会发送。或者，服务器要求设置Cookie，浏览器也不会处理。
+
+但是，如果省略withCredentials设置，有的浏览器还是会一起发送Cookie。这时，可以显式关闭withCredentials。
+</code></pre><p><code>xhr.withCredentials = false;</code></p>
+<pre><code>需要注意的是，如果要发送Cookie，Access-Control-Allow-Origin就不能设为星号，必须指定明确的、与请求网页一致的域名。同时，Cookie依然遵循同源政策，只有用服务器域名设置的Cookie才会上传，其他域名的Cookie并不会上传，且（跨源）原网页代码中的document.cookie也无法读取服务器域名下的Cookie。
+</code></pre><p><strong>非简单请求</strong></p>
+<pre><code>非简单请求是那种对服务器有特殊要求的请求，比如请求方法是PUT或DELETE，或者Content-Type字段的类型是application/json。
+
+非简单请求的CORS请求，会在正式通信之前，增加一次HTTP查询请求，称为&quot;预检&quot;请求（preflight）。
+
+浏览器先询问服务器，当前网页所在的域名是否在服务器的许可名单之中，以及可以使用哪些HTTP动词和头信息字段。只有得到肯定答复，浏览器才会发出正式的XMLHttpRequest请求，否则就报错。
+
+下面是一段浏览器的JavaScript脚本。
+</code></pre><p><code>var url = &#39;http://api.alice.com/cors&#39;;&lt;br&gt;var xhr = new XMLHttpRequest();&lt;br&gt;xhr.open(&#39;PUT&#39;, url, true);&lt;br&gt;xhr.setRequestHeader(&#39;X-Custom-Header&#39;, &#39;value&#39;);&lt;br&gt;xhr.send();</code></p>
+<pre><code>上面代码中，HTTP请求的方法是PUT，并且发送一个自定义头信息X-Custom-Header。
+
+浏览器发现，这是一个非简单请求，就自动发出一个&quot;预检&quot;请求，要求服务器确认可以这样请求。下面是这个&quot;预检&quot;请求的HTTP头信息。
+
+OPTIONS /cors HTTP/1.1
+Origin: http://api.bob.com
+Access-Control-Request-Method: PUT
+Access-Control-Request-Headers: X-Custom-Header
+Host: api.alice.com
+Accept-Language: en-US
+Connection: keep-alive
+User-Agent: Mozilla/5.0...
+
+&quot;预检&quot;请求用的请求方法是OPTIONS，表示这个请求是用来询问的。头信息里面，关键字段是Origin，表示请求来自哪个源。
+
+除了Origin字段，&quot;预检&quot;请求的头信息包括两个特殊字段。
+
+（1）Access-Control-Request-Method
+该字段是必须的，用来列出浏览器的CORS请求会用到哪些HTTP方法，上例是PUT。
+（2）Access-Control-Request-Headers
+该字段是一个逗号分隔的字符串，指定浏览器CORS请求会额外发送的头信息字段，上例是X-Custom-Header。
+</code></pre><p><strong>预检请求的回应</strong></p>
+<pre><code>服务器收到&quot;预检&quot;请求以后，检查了Origin、Access-Control-Request-Method和Access-Control-Request-Headers字段以后，确认允许跨源请求，就可以做出回应。
+
+HTTP/1.1 200 OK
+Date: Mon, 01 Dec 2008 01:15:39 GMT
+Server: Apache/2.0.61 (Unix)
+Access-Control-Allow-Origin: http://api.bob.com
+Access-Control-Allow-Methods: GET, POST, PUT
+Access-Control-Allow-Headers: X-Custom-Header
+Content-Type: text/html; charset=utf-8
+Content-Encoding: gzip
+Content-Length: 0
+Keep-Alive: timeout=2, max=100
+Connection: Keep-Alive
+Content-Type: text/plain
+
+上面的HTTP回应中，关键的是Access-Control-Allow-Origin字段，表示http://api.bob.com可以请求数据。该字段也可以设为星号，表示同意任意跨源请求。
+
+Access-Control-Allow-Origin: *
+
+如果浏览器否定了&quot;预检&quot;请求，会返回一个正常的HTTP回应，但是没有任何CORS相关的头信息字段。这时，浏览器就会认定，服务器不同意预检请求，因此触发一个错误，被XMLHttpRequest对象的onerror回调函数捕获。控制台会打印出如下的报错信息。
+
+XMLHttpRequest cannot load http://api.alice.com.
+Origin http://api.bob.com is not allowed by Access-Control-Allow-Origin.
+
+服务器回应的其他CORS相关字段如下。
+
+Access-Control-Allow-Methods: GET, POST, PUT
+Access-Control-Allow-Headers: X-Custom-Header
+Access-Control-Allow-Credentials: true
+Access-Control-Max-Age: 1728000
+
+（1）Access-Control-Allow-Methods
+该字段必需，它的值是逗号分隔的一个字符串，表明服务器支持的所有跨域请求的方法。 注意，返回的是所有支持的方法，而不单是浏览器请求的那个方法。这是为了避免多次&quot;预 检&quot;请求。
+（2）Access-Control-Allow-Headers
+如果浏览器请求包括Access-Control-Request-Headers字段，则&lt;Access-Control-Allow-He&gt;    &lt;/Access-Control-Allow-He&gt;aders字段是必需的。它也是一个逗号分隔的字符串，表明服务器支持的所有头信息字段，    不限于浏览器在&quot;预检&quot;中请求的字段。
+（3）Access-Control-Allow-Credentials
+该字段与简单请求时的含义相同。
+（4）Access-Control-Max-Age
+该字段可选，用来指定本次预检请求的有效期，单位为秒。上面结果中，有效期是20天（&lt;1&gt; &lt;/1&gt;728000秒），即允许缓存该条回应1728000秒（即20天），在此期间，不用发出另一条预检  请求。
+4.3 浏览器的正常请求和回应
+一旦服务器通过了&quot;预检&quot;请求，以后每次浏览器正常的CORS请求，就都跟简单请求一样，  会有一个Origin头信息字段。服务器的回应，也都会有一个&lt;Access-Control-Allow-Origin&gt;    &lt;/Access-Control-Allow-Origin&gt;头信息字段。
+
+下面是&quot;预检&quot;请求之后，浏览器的正常CORS请求。
+
+PUT /cors HTTP/1.1
+Origin: http://api.bob.com
+Host: api.alice.com
+X-Custom-Header: value
+Accept-Language: en-US
+Connection: keep-alive
+User-Agent: Mozilla/5.0...
+
+上面头信息的Origin字段是浏览器自动添加的。
+下面是服务器正常的回应。
+
+Access-Control-Allow-Origin: http://api.bob.com
+Content-Type: text/html; charset=utf-8
+上面头信息中，Access-Control-Allow-Origin字段是每次回应都必定包含的。
+</code></pre><p><strong>与JSONP比较</strong></p>
+<pre><code>CORS与JSONP的使用目的相同，但是比JSONP更强大。
+
+JSONP只支持GET请求，CORS支持所有类型的HTTP请求。JSONP的优势在于支持老式浏览器，以及可以向不支持CORS的网站请求数据。
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://github.com/isgonghang/isgonghang.github.io/2017/05/21/浏览器同源策略与CORS跨域/" data-id="cjcrbrtwu000dysvl0kxq0ykk" class="article-share-link">Teilen</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/05/23/排序算法汇总/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Neuer</strong>
+      <div class="article-nav-title">
+        
+          排序算法汇总
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/05/20/CSS清除浮动/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Älter</strong>
+      <div class="article-nav-title">CSS清除浮动</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archiv</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">May 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">letzter Beitrag</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/01/23/Java初学-安装/">Java初学-安装</a>
+          </li>
+        
+          <li>
+            <a href="/2017/09/17/css居中布局总结/">css居中布局总结</a>
+          </li>
+        
+          <li>
+            <a href="/2017/08/25/webpack深入与实战/">webpack深入与实战</a>
+          </li>
+        
+          <li>
+            <a href="/2017/08/18/JavaScript正则表达式/">JavaScript正则表达式</a>
+          </li>
+        
+          <li>
+            <a href="/2017/07/25/学习Javascript闭包/">学习Javascript闭包</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
