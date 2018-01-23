@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>cookie、localStorage、sessionStorage理解 | Harris</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="浏览器存储的方式主要有三种：cookie、localStorage和sessionStorage。查阅MDN文档 CookieHTTP Cookie（也叫Web cookie或者浏览器Cookie）是服务器发送到用户浏览器并保存在浏览器上的一块数据，它会在浏览器下一次发起请求时被携带并发送到服务器上。比较经典的，可以它用来确定两次请求是否来自于同一个浏览器，从而能够确认和保持用户的登录状态。Coo">
+<meta property="og:type" content="article">
+<meta property="og:title" content="cookie、localStorage、sessionStorage理解">
+<meta property="og:url" content="https://github.com/isgonghang/isgonghang.github.io/2017/07/18/cookie、localStorage、sessionStorage理解/index.html">
+<meta property="og:site_name" content="Harris">
+<meta property="og:description" content="浏览器存储的方式主要有三种：cookie、localStorage和sessionStorage。查阅MDN文档 CookieHTTP Cookie（也叫Web cookie或者浏览器Cookie）是服务器发送到用户浏览器并保存在浏览器上的一块数据，它会在浏览器下一次发起请求时被携带并发送到服务器上。比较经典的，可以它用来确定两次请求是否来自于同一个浏览器，从而能够确认和保持用户的登录状态。Coo">
+<meta property="og:updated_time" content="2017-07-24T06:48:04.031Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="cookie、localStorage、sessionStorage理解">
+<meta name="twitter:description" content="浏览器存储的方式主要有三种：cookie、localStorage和sessionStorage。查阅MDN文档 CookieHTTP Cookie（也叫Web cookie或者浏览器Cookie）是服务器发送到用户浏览器并保存在浏览器上的一块数据，它会在浏览器下一次发起请求时被携带并发送到服务器上。比较经典的，可以它用来确定两次请求是否来自于同一个浏览器，从而能够确认和保持用户的登录状态。Coo">
+  
+    <link rel="alternate" href="/atom.xml" title="Harris" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Harris</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://github.com/isgonghang/isgonghang.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-cookie、localStorage、sessionStorage理解" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/07/18/cookie、localStorage、sessionStorage理解/" class="article-date">
+  <time datetime="2017-07-18T08:04:19.000Z" itemprop="datePublished">2017-07-18</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      cookie、localStorage、sessionStorage理解
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>浏览器存储的方式主要有三种：cookie、localStorage和sessionStorage。<br><strong>查阅MDN文档</strong></p>
+<h2 id="Cookie"><a href="#Cookie" class="headerlink" title="Cookie"></a>Cookie</h2><p>HTTP Cookie（也叫Web cookie或者浏览器Cookie）是服务器发送到用户浏览器并保存在浏览器上的一块数据，它会在浏览器下一次发起请求时被携带并发送到服务器上。比较经典的，可以它用来确定两次请求是否来自于同一个浏览器，从而能够确认和保持用户的登录状态。Cookie的使用使得基于无状态的HTTP协议上记录稳定的状态信息成为了可能。</p>
+<p><strong>Cookie主要用在以下三个方面:</strong></p>
+<p>1.会话状态管理（如用户登录状态、购物车）<br>2.个性化设置（如用户自定义设置）<br>3.浏览器行为跟踪（如跟踪分析用户行为）</p>
+<p>Cookie可用于客户端数据的存储，在没有其它存储办法时，使用这种方式是可行的，但随着现在浏览器开始支持各种各样的存储方式而逐渐被废弃。由于服务器指定Cookie以后浏览器的每次请求都会携带Cookie数据，这会带来额外的性能负担（尤其是在移动环境下）。新的浏览器API已经允许开发者直接在本地存储数据，如可以使用Web storage API （本地存储localStorage和会话存储sessionStorage）和IndexedDB。</p>
+<p><strong>创建cookie</strong><br>当服务器收到HTTP请求时，可以在响应头里面增加一个Set-Cookie头部。浏览器收到响应之后会取出Cookie信息并保存，之后对该服务器每一次请求中都通过Cookie请求头部将Cookie信息发送给服务器。另外，Cookie的过期时间、域、路径、有效期、站点都可以根据需要来指定。</p>
+<pre><code>Set-Cookie: &lt;cookie名称&gt;=&lt;cookie值&gt;
+</code></pre><p>创建cookie时可以制定cookie的键值对、过期时间(expires)或有效期(Max-age)、作用域(domain和path)。</p>
+<p>在JS代码中可以通过document.cookie来创建新的cookie或访问cookie。</p>
+<h2 id="localStorage-amp-sessionStorage"><a href="#localStorage-amp-sessionStorage" class="headerlink" title="localStorage&amp;sessionStorage"></a>localStorage&amp;sessionStorage</h2><p>localStorage 属性允许你访问一个localStorage对象。localStorage与sessionStorage 相似。不同之处在于，<strong>存储在 localStorage里面的数据没有过期时间expiration time），而存储在 sessionStorage里面的数据会在浏览器会话（browsing session）结束时被清除，即浏览器关闭时。</strong></p>
+<p>应该注意的是，无论是localStorage还是sessionStorage中保存的数据都仅限于该页面的协议。</p>
+<pre><code>myStorage = localStorage;
+</code></pre><p>使用Storage.setItem()方法往里面添加一个数据项。</p>
+<pre><code>localStorage.setItem(&apos;myCat&apos;, &apos;Tom&apos;);
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://github.com/isgonghang/isgonghang.github.io/2017/07/18/cookie、localStorage、sessionStorage理解/" data-id="cjcrdwy1z0006icvlmtef7srk" class="article-share-link">Teilen</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/07/20/setTimeOut引发的异步函数思考/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Neuer</strong>
+      <div class="article-nav-title">
+        
+          setTimeOut引发的异步函数思考
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/05/23/排序算法汇总/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Älter</strong>
+      <div class="article-nav-title">排序算法汇总</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archiv</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">May 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">letzter Beitrag</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/01/23/Java初学-安装/">Java初学-安装</a>
+          </li>
+        
+          <li>
+            <a href="/2017/09/17/css居中布局总结/">css居中布局总结</a>
+          </li>
+        
+          <li>
+            <a href="/2017/08/25/webpack深入与实战/">webpack深入与实战</a>
+          </li>
+        
+          <li>
+            <a href="/2017/08/18/JavaScript正则表达式/">JavaScript正则表达式</a>
+          </li>
+        
+          <li>
+            <a href="/2017/07/25/学习Javascript闭包/">学习Javascript闭包</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 Harris<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

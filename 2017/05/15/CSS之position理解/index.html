@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>CSS之position理解 | Harris</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="position的四个属性值relativeabsolutefixedstatic`&amp;lt;div id=&amp;quot;demo&amp;quot;&amp;gt;  &amp;lt;div id=&amp;quot;demo1&amp;quot;&amp;gt;demo1&amp;lt;/div&amp;gt;  &amp;lt;div id=&amp;quot;demo1&amp;quot;&amp;gt;demo2&amp;lt;/div&amp;gt; &amp;lt;/div&amp;gt;` relative r">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CSS之position理解">
+<meta property="og:url" content="https://github.com/isgonghang/isgonghang.github.io/2017/05/15/CSS之position理解/index.html">
+<meta property="og:site_name" content="Harris">
+<meta property="og:description" content="position的四个属性值relativeabsolutefixedstatic`&amp;lt;div id=&amp;quot;demo&amp;quot;&amp;gt;  &amp;lt;div id=&amp;quot;demo1&amp;quot;&amp;gt;demo1&amp;lt;/div&amp;gt;  &amp;lt;div id=&amp;quot;demo1&amp;quot;&amp;gt;demo2&amp;lt;/div&amp;gt; &amp;lt;/div&amp;gt;` relative r">
+<meta property="og:updated_time" content="2017-05-22T11:19:12.053Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="CSS之position理解">
+<meta name="twitter:description" content="position的四个属性值relativeabsolutefixedstatic`&amp;lt;div id=&amp;quot;demo&amp;quot;&amp;gt;  &amp;lt;div id=&amp;quot;demo1&amp;quot;&amp;gt;demo1&amp;lt;/div&amp;gt;  &amp;lt;div id=&amp;quot;demo1&amp;quot;&amp;gt;demo2&amp;lt;/div&amp;gt; &amp;lt;/div&amp;gt;` relative r">
+  
+    <link rel="alternate" href="/atom.xml" title="Harris" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Harris</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://github.com/isgonghang/isgonghang.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-CSS之position理解" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/05/15/CSS之position理解/" class="article-date">
+  <time datetime="2017-05-15T11:41:31.000Z" itemprop="datePublished">2017-05-15</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      CSS之position理解
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="position的四个属性值"><a href="#position的四个属性值" class="headerlink" title="position的四个属性值"></a>position的四个属性值</h2><h3 id="relative"><a href="#relative" class="headerlink" title="relative"></a>relative</h3><h3 id="absolute"><a href="#absolute" class="headerlink" title="absolute"></a>absolute</h3><h3 id="fixed"><a href="#fixed" class="headerlink" title="fixed"></a>fixed</h3><h3 id="static"><a href="#static" class="headerlink" title="static"></a>static</h3><pre><code>`&lt;div id=&quot;demo&quot;&gt;
+ &lt;div id=&quot;demo1&quot;&gt;demo1&lt;/div&gt;
+ &lt;div id=&quot;demo1&quot;&gt;demo2&lt;/div&gt;
+&lt;/div&gt;`
+</code></pre><p><strong>relative</strong></p>
+<pre><code>relative属性是相对它本身的位置来进行偏移的。如果设定demo1一个relative属性，比如设置如下CSS代码：
+</code></pre><p><strong>demo1</strong><br>    <code>{
+    position: relative;
+    padding: 5px;
+    top: 5px;
+    left: 5px;
+    }</code></p>
+<pre><code>我的理解，如果不设置relative属性，demo1的位置按照正常的文档流，它应该处于某个位置。但当设置demo1为的position为relative后，将根据top，right，bottom，left的值按照它理应所在的位置进行偏移，relative的“相对的”意思也正体现于此。
+
+只需要记住，demo1如果不设置relative时它应该在哪里，一旦设置后就按照它理应在的位置进行偏移。
+
+但是sub2的位置是原来的位置，它的位置不会因为demo1增加了position的属性而发生改变。
+
+如果此时把demo2的position也设置为relative，此时依然和sub1一样，按照它原来应有的位置进行偏移。
+
+注意relative的偏移是基于对象的margin的左上侧的(左上顶点)。
+</code></pre><p><strong>absolute</strong></p>
+<pre><code>这个属性有误导。说当position属性设为absolute后，总是按照浏览器窗口来进行定位的，这其实是错误的。实际上，这是fixed属性的特点。
+</code></pre><p><strong>当demo1的position设置为absolute后</strong></p>
+<pre><code>（1）当demo1的父对象(或曾祖父，只要是父级对象)也设置了position属性，且position的属性值为absolute或者relative时，也就是说，不是默认值的情况，此时sub1按照这个***父元素***来进行定位。
+
+如果parent设定了margin，border，padding等属性，那么这个定位点将忽略padding，将会从padding开始的地方(即只从padding的左上角开始)进行定位，这与我们会想当然的以为会以margin的左上端开始定位的想法是不同的。
+
+接下来的问题是，sub2的位置到哪里去了呢？由于当position设置为absolute后，会导致sub1溢出正常的文档流，就像它不属于 parent一样，它漂浮了起来，在DreamWeaver中把它称为“层”，其实意思是一样的。此时sub2将获得sub1的位置，它的文档流不再基于 sub1，而是直接从parent开始。
+
+（2）如果demo1不存在一个有着position属性的父对象，那么那就会以body为定位对象，按照浏览器的窗口进行定位，这个比较容易理解。
+</code></pre><p><strong>fixed</strong></p>
+<pre><code>正如其语意，fix为固定的意思，所以一但设定fixed定位，该元素将一直以浏览器窗口进行定位，不会随着滚动条的拖动而发生变化，一般用于固定导航。
+</code></pre><p><strong>static</strong></p>
+<pre><code>position的默认值，一般不设置position属性时，会按照正常的文档流进行排列。
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://github.com/isgonghang/isgonghang.github.io/2017/05/15/CSS之position理解/" data-id="cjcrdwy1h0000icvl3grhb40g" class="article-share-link">Teilen</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/05/17/HTML5属性总结/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Neuer</strong>
+      <div class="article-nav-title">
+        
+          HTML5属性总结
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/05/11/对-slice-call-arguments-1-的思考/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Älter</strong>
+      <div class="article-nav-title">对[].slice.call(arguments,1)的思考</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archiv</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">May 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">letzter Beitrag</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/01/23/Java初学-安装/">Java初学-安装</a>
+          </li>
+        
+          <li>
+            <a href="/2017/09/17/css居中布局总结/">css居中布局总结</a>
+          </li>
+        
+          <li>
+            <a href="/2017/08/25/webpack深入与实战/">webpack深入与实战</a>
+          </li>
+        
+          <li>
+            <a href="/2017/08/18/JavaScript正则表达式/">JavaScript正则表达式</a>
+          </li>
+        
+          <li>
+            <a href="/2017/07/25/学习Javascript闭包/">学习Javascript闭包</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 Harris<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
